@@ -1,0 +1,40 @@
+{
+  "users": [
+    {
+      "id": "user1",
+      "avatar": "https://example.com/avatar/user1.png",
+      "name": "Nguyễn Văn A"
+    },
+    {
+      "id": "chatbot",
+      "avatar": "https://example.com/avatar/chatbot.png",
+      "name": "Chatbot"
+    }
+  ],
+  "messages": [
+    {
+      "id": "msg1",
+      "userId": "user1",
+      "createdAt": "2024-08-20T08:30:00Z",
+      "text": "Chào chatbot!"
+    },
+    {
+      "id": "msg2",
+      "userId": "chatbot",
+      "createdAt": "2024-08-20T08:30:10Z",
+      "text": "Chào bạn! Tôi có thể giúp gì cho bạn hôm nay?"
+    },
+    {
+      "id": "msg3",
+      "userId": "user1",
+      "createdAt": "2024-08-20T08:31:00Z",
+      "text": "Tôi cần thông tin về khóa học."
+    },
+    {
+      "id": "msg4",
+      "userId": "chatbot",
+      "createdAt": "2024-08-20T08:31:15Z",
+      "text": "Tất nhiên! Bạn muốn biết thông tin về khóa học nào?"
+    }
+  ]
+}
