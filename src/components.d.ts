@@ -7,10 +7,15 @@ export {}
 /* prettier-ignore */
 declare module 'vue' {
   export interface GlobalComponents {
+    AppLoading: typeof import('./components/common/AppLoading.vue')['default']
     ChatbotContainer: typeof import('./components/ChatbotContainer.vue')['default']
     Footer: typeof import('./components/chatbot/Footer.vue')['default']
     Header: typeof import('./components/chatbot/Header.vue')['default']
     HelloWorld: typeof import('./components/HelloWorld.vue')['default']
     IconChat: typeof import('./components/IconChat.vue')['default']
+    IconHelp: typeof import('./components/icon/IconHelp.vue')['default']
+    IconSupport: typeof import('./components/icon/IconSupport.vue')['default']
+    ItemMessage: typeof import('./components/chatbot/ItemMessage.vue')['default']
+    SendChat: typeof import('./components/common/SendChat.vue')['default']
   }
 }

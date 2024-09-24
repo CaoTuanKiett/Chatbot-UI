@@ -5,8 +5,8 @@ export interface User {
 }
 export interface Message {
   id: string;
-  userId: string;
+  sender: string;
   createdAt: Date;
-  text: string;
+  content: string;
 }
 export type AsyncState = null | 'loading' | 'error' | 'complete';
