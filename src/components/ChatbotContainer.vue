@@ -1,19 +1,21 @@
 <script setup lang="ts">
 import axios from 'axios';
-import dataFake from '../api/dataFake.json';
+// import dataFake from '../api/dataFake.json';
 
 import type { Message, User } from '../types/index';
 
-const dataMessage: Message[] = dataFake.messages;
+// const dataMessage: Message[] = dataFake.messages;
 const isLoading = ref<boolean>(false);
-const isLoadResponse = ref<boolean>(true);
+const isLoadResponse = ref<boolean>(false);
 
-console.log(dataFake);
+// console.log(dataFake);
 
 const apiUrl = import.meta.env.VITE_API_URL;
 const apiVersion = import.meta.env.VITE_API_VERSION;
 const data = ref<Message[]>([]);
 const scrollToEnd = ref<HTMLElement | null>(null);
+
+const dataMess = ref<Message[]>([]);
 
 const fetchMessages = async () => {
   isLoading.value = true;
@@ -32,6 +34,10 @@ const fetchMessages = async () => {
 
 onMounted(async () => {
   await fetchMessages();
+  localStorage.setItem('dataMess', JSON.stringify(data.value));
+
+  dataMess.value = data.value;
+  // console.log('dataMess', dataMess.value);
 });
 
 // const handleLoadResponse = async () => {
@@ -54,7 +60,17 @@ const handleResponseChat = async (valueInput: string) => {
       createdAt: new Date().toISOString(),
     });
 
-    console.log(response.data);
+    console.log('handleResponseChat', response.data);
+
+    let dataString = localStorage.getItem('dataMess') ?? '[]';
+    let data = JSON.parse(dataString);
+    console.log('localStorage', data);
+
+    data.push(response.data);
+    localStorage.setItem('dataList', JSON.stringify(data));
+    dataMess.value = data;
+
+    scrollToEnd.value?.scrollIntoView({ behavior: 'smooth' });
   } catch (error) {
     console.error(error);
   }
@@ -72,7 +88,7 @@ const handleResponseChat = async (valueInput: string) => {
     </div>
     <div v-else class="chatbot-content h-full p-3 overflow-y-scroll">
       <ItemMessage
-        v-for="message in data"
+        v-for="message in dataMess"
         :key="message.id"
         :sender="message.sender"
         :message="message"

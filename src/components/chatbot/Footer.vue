@@ -54,6 +54,7 @@ const handleSendChat = () => {
         type="text"
         id="messageInput"
         v-model="valueInput"
+        @keydown.enter="handleSendChat"
       />
       <button
         id="sendButton"
