@@ -9,7 +9,11 @@ declare module 'vue' {
   export interface GlobalComponents {
     AppLoading: typeof import('./components/common/AppLoading.vue')['default']
     ChatbotContainer: typeof import('./components/ChatbotContainer.vue')['default']
+    ElOption: typeof import('element-plus/es')['ElOption']
+    ElSelect: typeof import('element-plus/es')['ElSelect']
     Footer: typeof import('./components/chatbot/Footer.vue')['default']
+    FormFeedback: typeof import('./components/chatbot/FormFeedback.vue')['default']
+    FormQuestion: typeof import('./components/chatbot/FormQuestion.vue')['default']
     Header: typeof import('./components/chatbot/Header.vue')['default']
     HelloWorld: typeof import('./components/HelloWorld.vue')['default']
     IconChat: typeof import('./components/IconChat.vue')['default']
