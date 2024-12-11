@@ -4,6 +4,7 @@ const valueInput = ref<string>('');
 // Định nghĩa props
 const props = defineProps<{
   handleResponseChat: (message: string) => void;
+  isLoadResponse: boolean;
 }>();
 
 const handleSendChat = () => {
@@ -11,6 +12,11 @@ const handleSendChat = () => {
   props.handleResponseChat(valueInput.value);
   valueInput.value = '';
 };
+
+const handleCancelSendChat = () => {
+  console.log('handleCancelSendChat');
+};
+console.log('isLoadResponse', props.isLoadResponse);
 </script>
 
 <template>
@@ -57,6 +63,18 @@ const handleSendChat = () => {
         @keydown.enter="handleSendChat"
       />
       <button
+        v-if="props.isLoadResponse"
+        class="w-12 flex justify-center items-center"
+        @click="handleCancelSendChat"
+      >
+        <img
+          src="/icons/circle-stop-regular.svg"
+          alt="circle-stop-regular.svg"
+          class="w-8 ml-1"
+        />
+      </button>
+      <button
+        v-else
         id="sendButton"
         @click="handleSendChat"
         @keydown.enter="handleSendChat"

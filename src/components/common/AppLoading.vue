@@ -10,7 +10,7 @@
     enable-background="new 0 0 0 0"
     xml:space="preserve"
   >
-    <circle fill="currentColor" stroke="none" cx="6" cy="50" r="6">
+    <circle fill="currentColor" stroke="none" cx="0" cy="50" r="20">
       <animate
         attributeName="opacity"
         dur="1s"
@@ -19,7 +19,7 @@
         begin="0.1"
       />
     </circle>
-    <circle fill="currentColor" stroke="none" cx="26" cy="50" r="6">
+    <circle fill="currentColor" stroke="none" cx="66" cy="50" r="20">
       <animate
         attributeName="opacity"
         dur="1s"
@@ -28,7 +28,7 @@
         begin="0.2"
       />
     </circle>
-    <circle fill="currentColor" stroke="none" cx="46" cy="50" r="6">
+    <circle fill="currentColor" stroke="none" cx="126" cy="50" r="20">
       <animate
         attributeName="opacity"
         dur="1s"
@@ -43,9 +43,7 @@
 <style scoped>
 svg {
   width: 30px;
-  height: 40px;
-  margin-top: 2px;
-  margin-right: -10px;
+  height: 16px;
   display: inline-block;
 }
 </style>

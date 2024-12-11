@@ -12,6 +12,7 @@
     "@vueuse/core": "^11.0.1",
     "axios": "^1.7.4",
     "element-plus": "^2.8.0",
+    "jwt-decode": "^4.0.0",
     "vue": "^3.4.37",
     "vue3-markdown-it": "^1.0.10"
   },

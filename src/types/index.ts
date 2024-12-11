@@ -6,7 +6,8 @@ export interface User {
 export interface Message {
   id: string;
   sender: string;
-  createdAt: Date;
+  sentTime: string;
   content: string;
+  threadId?: number;
 }
 export type AsyncState = null | 'loading' | 'error' | 'complete';

@@ -11,6 +11,7 @@ declare module 'vue' {
     ChatbotContainer: typeof import('./components/ChatbotContainer.vue')['default']
     ElOption: typeof import('element-plus/es')['ElOption']
     ElSelect: typeof import('element-plus/es')['ElSelect']
+    ElTooltip: typeof import('element-plus/es')['ElTooltip']
     Footer: typeof import('./components/chatbot/Footer.vue')['default']
     FormFeedback: typeof import('./components/chatbot/FormFeedback.vue')['default']
     FormQuestion: typeof import('./components/chatbot/FormQuestion.vue')['default']

@@ -16,6 +16,12 @@ const isLoadResponse = ref<boolean>(false);
 
 const apiUrl = import.meta.env.VITE_API_URL;
 const apiVersion = import.meta.env.VITE_API_VERSION;
+const VITE_BE_API = import.meta.env.VITE_BE_API;
+const VITE_CHATBOT_ID = import.meta.env.VITE_CHATBOT_ID;
+const VITE_CONTENT_SHOW_FORM = import.meta.env.VITE_CONTENT_SHOW_FORM;
+const VITE_CONTENT_SHOW_FORM_FEEDBACK = import.meta.env
+  .VITE_CONTENT_SHOW_FORM_FEEDBACK;
+
 const data = ref<Message[]>([]);
 const scrollToEnd = ref<HTMLElement | null>(null);
 const isShowFormQuestion = ref<boolean>(false);
@@ -26,9 +32,12 @@ const dataMess = ref<Message[]>([]);
 type NotificationType = '' | 'error' | 'success' | 'warning' | 'info';
 
 const fetchMessages = async () => {
+  // Lấy threadId từ localStorage
+  const threadId = localStorage.getItem('threadId') || 0;
+
   isLoading.value = true;
   try {
-    const response = await axios.get(`${apiUrl}/${apiVersion}/messages`);
+    const response = await axios.get(`${VITE_BE_API}/messages/${threadId}`);
     if (response.status !== 200) {
       console.error('Error', response.status);
       return;
@@ -44,7 +53,7 @@ const fetchMessages = async () => {
 
     setTimeout(() => {
       scrollToEnd.value?.scrollIntoView({ behavior: 'smooth' });
-    }, 100);
+    }, 10);
   } catch (error) {
     console.error(error);
   }
@@ -56,68 +65,106 @@ onMounted(async () => {
 
   dataMess.value = data.value;
   // console.log('dataMess', dataMess.value);
+
+  if (dataMess.value.length === 0) {
+    const welcomeMessage: Message = {
+      id: Math.random().toString(36).substr(2, 9),
+      content: 'Xin chào, tôi có thể giúp gì cho bạn?',
+      sender: 'bot',
+      sentTime: new Date().toISOString(),
+    };
+
+    dataMess.value.push(welcomeMessage);
+    localStorage.setItem('dataMess', JSON.stringify(dataMess.value));
+  }
 });
 
-// const handleLoadResponse = async () => {
-//   isLoadResponse.value = false;
-// };
-
 const handleResponseChat = async (valueInput: string) => {
-  if (valueInput.trim() === '') {
+  if (!valueInput.trim()) {
     console.log('Không được để trống');
-
     return;
   }
 
+  handleCancelFeedback();
+  handleCancelQuestion();
+
+  // Hiển thị trạng thái loading
   isLoadResponse.value = true;
 
-  scrollToEnd.value?.scrollIntoView({ behavior: 'smooth' });
+  // Cuộn đến cuối màn hình chat
+  setTimeout(() => {
+    scrollToEnd.value?.scrollIntoView({ behavior: 'smooth' });
+  }, 10);
 
-  const dataInput = ref<Message[]>([]);
-  dataInput.value = {
+  // Tạo message của người dùng
+  const userMessage: Message = {
     id: Math.random().toString(36).substr(2, 9),
-    content: valueInput,
+    content: valueInput.trim(),
     sender: 'user',
-    createdAt: new Date().toISOString(),
+    sentTime: new Date().toISOString(),
   };
 
-  let dataString = localStorage.getItem('dataMess') ?? '[]';
-  let data = JSON.parse(dataString);
-  console.log('localStorage', data);
+  // Lấy danh sách đoạn chat từ localStorage
+  let chatHistory: Message[] = JSON.parse(
+    localStorage.getItem('dataMess') || '[]'
+  );
 
-  data.push(dataInput.value);
+  // Thêm message người dùng vào lịch sử
+  chatHistory.push(userMessage);
+  localStorage.setItem('dataMess', JSON.stringify(chatHistory));
 
-  // Thêm vào dataMess để hiển thị lên giao diện
-  dataMess.value = data;
+  // Cập nhật giao diện
+  dataMess.value = chatHistory;
+
+  // Lấy threadId từ localStorage
+  const threadId = localStorage.getItem('threadId') || 0;
 
   try {
-    const response = await axios.post(`${apiUrl}/${apiVersion}/messages`, {
-      content: valueInput,
+    // Gửi yêu cầu đến API
+    const response = await axios.post(`${VITE_BE_API}/chat`, {
+      content: valueInput.trim(),
       sender: 'user',
-      createdAt: new Date().toISOString(),
+      chatbotId: VITE_CHATBOT_ID,
+      threadId: threadId,
     });
 
-    const responseFake = {
-      data: {
-        id: Math.random().toString(36).substr(2, 9),
-        content: 'Chào bạn',
-        sender: 'bot',
-        createdAt: new Date().toISOString(),
-      },
-    };
+    if (response.data) {
+      // Thêm phản hồi từ chatbot vào lịch sử
 
-    console.log('handleResponseChat', response.data);
+      chatHistory.push(response.data);
+      localStorage.setItem('dataMess', JSON.stringify(chatHistory));
+      localStorage.setItem('threadId', response.data.threadId);
 
-    data.push(responseFake.data);
-    localStorage.setItem('dataList', JSON.stringify(data));
-    isLoadResponse.value = false;
-    setTimeout(() => {
-      scrollToEnd.value?.scrollIntoView({ behavior: 'smooth' });
-    }, 5);
+      // Cập nhật giao diện
+      dataMess.value = chatHistory;
+
+      if (
+        String(response.data.content)
+          .trim()
+          .includes(String(VITE_CONTENT_SHOW_FORM).trim())
+      ) {
+        isShowFormQuestion.value = true;
+      }
+
+      if (
+        String(response.data.content)
+          .trim()
+          .includes(String(VITE_CONTENT_SHOW_FORM_FEEDBACK).trim())
+      ) {
+        isShowFeedback.value = true;
+      }
+
+      // Cuộn xuống cuối màn hình sau khi nhận phản hồi
+      setTimeout(() => {
+        scrollToEnd.value?.scrollIntoView({ behavior: 'smooth' });
+      }, 10);
+    }
   } catch (error) {
-    console.error(error);
+    console.error('Lỗi khi gửi yêu cầu đến API:', error);
+  } finally {
+    // Tắt trạng thái loading
+    isLoadResponse.value = false;
   }
-  // valueInput.value = '';
 };
 
 const showNotification = (
@@ -190,9 +237,10 @@ const handleCancelFeedback = () => {
       />
       <div
         v-if="isLoadResponse"
-        class="w-fit max-w-96 bg-gray-300 p-2 rounded-lg"
+        class="w-fit relative max-w-96 bg-gray-300 p-2 pr-3 rounded-lg"
       >
         <AppLoading />
+        <span class="after-message-bot"></span>
       </div>
       <button
         @click="
@@ -232,7 +280,10 @@ const handleCancelFeedback = () => {
       </div>
       <div ref="scrollToEnd"></div>
     </div>
-    <Footer :handleResponseChat="handleResponseChat" />
+    <Footer
+      :handleResponseChat="handleResponseChat"
+      :isLoadResponse="isLoadResponse"
+    />
   </div>
 </template>
 
@@ -269,5 +320,15 @@ const handleCancelFeedback = () => {
 
 .chatbot-container .form-question {
   box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+}
+
+.after-message-bot {
+  position: absolute;
+  left: -7px;
+  bottom: 0;
+  border-bottom: 17px solid rgb(209 213 219 / var(--tw-bg-opacity));
+  border-left: 13px solid transparent;
+  /* border-end-start-radius: 0px;
+  border-start-start-radius: 18px; */
 }
 </style>
