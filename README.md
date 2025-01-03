@@ -1,60 +1,60 @@
-
 # Chatbot-UI
 
-Chatbot-UI là một dự án được phát triển bằng Vue 3 kết hợp với TypeScript và Vite. Dự án này cung cấp giao diện người dùng cho chatbot.
+Chatbot-UI is a project developed using Vue 3, combined with TypeScript and Vite. This project provides the user interface for a chatbot application. ✨🌟🚀
 
-## Mô tả
+## Description
 
-Dự án này sử dụng các công nghệ sau:
-- Vue 3
-- TypeScript
-- Vite
-- Element Plus
-- Axios
-- VueUse
-- jwt-decode
-- vue3-markdown-it
+This project utilizes the following technologies: ✨🌟🚀
+- 🌟 Vue 3 🌟✨🚀
+- 🛠️ TypeScript 🛠️✨🚀
+- ⚡ Vite ⚡✨🚀
+- 🎨 Element Plus 🎨✨🚀
+- 📡 Axios 📡✨🚀
+- 🔗 VueUse 🔗✨🚀
+- 🔐 jwt-decode 🔐✨🚀
+- ✍️ vue3-markdown-it ✍️✨🚀
 
-## Cài đặt
+## Installation
 
-Để cài đặt các gói cần thiết, chạy lệnh sau:
+To install the required dependencies, run the following command: ✨🌟🚀
 ```sh
 pnpm install
 ```
 
-## Khởi động dự án
+## Running the Project
 
-Để khởi động dự án, chạy lệnh sau:
+To start the development server, execute: ✨🌟🚀
 ```sh
 pnpm run dev
 ```
 
-## Build dự án
+## Building the Project
 
-Để build dự án, chạy lệnh sau:
+To build the project for production, run: ✨🌟🚀
 ```sh
 pnpm run build
 ```
 
-## Xem trước dự án
+## Previewing the Project
 
-Để xem trước dự án, chạy lệnh sau:
+To preview the production build, execute: ✨🌟🚀
 ```sh
 pnpm run preview
 ```
 
-## Cấu trúc dự án
+## Project Structure
 
-Dự án này sử dụng cấu trúc thư mục tiêu chuẩn của Vue 3 và Vite. Các tệp chính bao gồm:
+This project follows the standard directory structure of Vue 3 and Vite. Key files and directories include: ✨🌟🚀
 
-- **package.json**: Chứa thông tin về dự án và các phụ thuộc.
-- **src/**: Chứa mã nguồn của dự án.
-- **public/**: Chứa các tệp tĩnh.
+- 📦 **package.json**: Contains project metadata and dependencies. 📦✨🚀
+- 🗂️ **src/**: Contains the source code of the application. 🗂️✨🚀
+- 🌐 **public/**: Contains static assets. 🌐✨🚀
 
-## Đóng góp
+## Contributions
 
-Chúng tôi hoan nghênh các đóng góp từ cộng đồng. Để đóng góp, vui lòng tạo pull request và tuân theo các nguyên tắc đóng góp của chúng tôi.
+We welcome contributions from the community. To contribute, please create a pull request and follow our contribution guidelines. ✨🌟🚀
 
-## Liên hệ
+## Contact
 
-Nếu có bất kỳ câu hỏi hoặc góp ý nào, vui lòng liên hệ qua email: [tuankiett.cao@gmail.com](tuankiett.cao@gmail.com).
+For any questions or feedback, feel free to reach out via email: [tuankiett.cao@gmail.com](mailto:tuankiett.cao@gmail.com). ✨🌟🚀
+
